@@ -7,116 +7,81 @@ import type { Ring3DConfig } from '../hooks/use-ring-config';
 interface HeadModelProps {
   config: Ring3DConfig['head'];
   material: Ring3DConfig['material'];
-  bandInnerRadius: number;
+  baseY: number;
+  stoneScale: number;
 }
 
-interface ProngProps {
-  position: [number, number, number];
-  rotation?: [number, number, number];
-  tipStyle: Ring3DConfig['head']['prongTipStyle'];
-  material: Ring3DConfig['material'];
-  height?: number;
-}
-
-function Prong({ position, rotation = [0, 0, 0], tipStyle, material, height = 0.35 }: ProngProps) {
-  const geometry = useMemo(() => {
-    const baseRadius = 0.025;
-    let tipRadius = 0.015;
-
-    // Adjust tip based on style
-    switch (tipStyle) {
-      case 'claw':
-        tipRadius = 0.008; // Pointed
-        break;
-      case 'petite-claw':
-        tipRadius = 0.012; // Slightly pointed
-        break;
-      case 'rounded':
-        tipRadius = 0.02; // Rounded top
-        break;
-      case 'tab':
-        tipRadius = 0.025; // Flat top (same as base)
-        break;
-    }
-
-    // Create a tapered cylinder for the prong
-    const geo = new THREE.CylinderGeometry(tipRadius, baseRadius, height, 8);
-    return geo;
-  }, [tipStyle, height]);
-
-  return (
-    <mesh
-      geometry={geometry}
-      position={position}
-      rotation={rotation}
-      castShadow
-    >
-      <meshStandardMaterial
-        color={material.color}
-        metalness={material.metalness}
-        roughness={material.roughness}
-        envMapIntensity={1.2}
-      />
-    </mesh>
-  );
-}
-
-export function HeadModel({ config, material, bandInnerRadius }: HeadModelProps) {
+export function HeadModel({ config, material, baseY, stoneScale }: HeadModelProps) {
   const { type, prongLayout, prongTipStyle } = config;
 
-  // Position where prongs emerge from the band
-  const baseHeight = 0.1;
-  const prongHeight = 0.35;
+  // Prong dimensions based on stone scale
+  const prongRadius = stoneScale * 0.35; // How far prongs are from center
+  const prongBaseWidth = 0.02;
+  const prongTipWidth = prongTipStyle === 'claw' ? 0.008 : prongTipStyle === 'rounded' ? 0.015 : 0.012;
+  const prongHeight = 0.28;
 
-  // Calculate prong positions based on layout
+  // Calculate prong positions
   const prongPositions = useMemo(() => {
-    const positions: [number, number, number][] = [];
-    const radius = 0.15; // Distance from center for prongs
+    const positions: { pos: [number, number, number]; angle: number }[] = [];
 
     if (prongLayout === '4-classic') {
-      // North, South, East, West
-      positions.push([0, baseHeight + prongHeight / 2, radius]); // Front
-      positions.push([0, baseHeight + prongHeight / 2, -radius]); // Back
-      positions.push([radius, baseHeight + prongHeight / 2, 0]); // Right
-      positions.push([-radius, baseHeight + prongHeight / 2, 0]); // Left
+      // 4 prongs at cardinal positions
+      [0, 90, 180, 270].forEach((deg) => {
+        const angle = (deg * Math.PI) / 180;
+        positions.push({
+          pos: [
+            Math.sin(angle) * prongRadius,
+            baseY + prongHeight / 2 + 0.05,
+            Math.cos(angle) * prongRadius,
+          ],
+          angle: angle,
+        });
+      });
     } else {
-      // 4-compass: Diagonal positions
-      const diag = radius * 0.707; // cos(45deg)
-      positions.push([diag, baseHeight + prongHeight / 2, diag]);
-      positions.push([diag, baseHeight + prongHeight / 2, -diag]);
-      positions.push([-diag, baseHeight + prongHeight / 2, diag]);
-      positions.push([-diag, baseHeight + prongHeight / 2, -diag]);
+      // 4-compass: 45 degree offset
+      [45, 135, 225, 315].forEach((deg) => {
+        const angle = (deg * Math.PI) / 180;
+        positions.push({
+          pos: [
+            Math.sin(angle) * prongRadius,
+            baseY + prongHeight / 2 + 0.05,
+            Math.cos(angle) * prongRadius,
+          ],
+          angle: angle,
+        });
+      });
     }
 
     return positions;
-  }, [prongLayout]);
+  }, [prongLayout, prongRadius, baseY, prongHeight]);
 
   if (type === 'none') {
     return null;
   }
 
+  // Bezel setting - a smooth collar around the stone
   if (type === 'bezel') {
-    // Bezel setting - a collar around the stone instead of prongs
     return (
       <group>
         {/* Bezel collar */}
-        <mesh position={[0, baseHeight + 0.15, 0]} castShadow>
-          <torusGeometry args={[0.22, 0.03, 16, 32]} />
+        <mesh position={[0, baseY + 0.18, 0]} castShadow>
+          <cylinderGeometry args={[stoneScale * 0.55, stoneScale * 0.6, 0.22, 32, 1, true]} />
           <meshStandardMaterial
             color={material.color}
             metalness={material.metalness}
             roughness={material.roughness}
-            envMapIntensity={1.2}
+            envMapIntensity={1.5}
+            side={THREE.DoubleSide}
           />
         </mesh>
-        {/* Base platform */}
-        <mesh position={[0, baseHeight, 0]} castShadow>
-          <cylinderGeometry args={[0.2, 0.25, 0.08, 32]} />
+        {/* Small base connecting to band */}
+        <mesh position={[0, baseY + 0.03, 0]} castShadow>
+          <cylinderGeometry args={[0.06, 0.08, 0.06, 16]} />
           <meshStandardMaterial
             color={material.color}
             metalness={material.metalness}
             roughness={material.roughness}
-            envMapIntensity={1.2}
+            envMapIntensity={1.5}
           />
         </mesh>
       </group>
@@ -125,65 +90,80 @@ export function HeadModel({ config, material, bandInnerRadius }: HeadModelProps)
 
   return (
     <group>
-      {/* Base platform that connects prongs to band */}
-      <mesh position={[0, baseHeight / 2, 0]} castShadow>
-        <cylinderGeometry args={[0.18, 0.22, baseHeight, 32]} />
+      {/* Small base/gallery connecting prongs to band */}
+      <mesh position={[0, baseY + 0.025, 0]} castShadow>
+        <cylinderGeometry args={[0.05, 0.07, 0.05, 16]} />
         <meshStandardMaterial
           color={material.color}
           metalness={material.metalness}
           roughness={material.roughness}
-          envMapIntensity={1.2}
+          envMapIntensity={1.5}
         />
       </mesh>
 
-      {/* Prongs */}
-      {prongPositions.map((pos, index) => (
-        <Prong
+      {/* Prongs - thin tapered cylinders */}
+      {prongPositions.map(({ pos, angle }, index) => (
+        <mesh
           key={index}
           position={pos}
-          tipStyle={prongTipStyle}
-          material={material}
-          height={prongHeight}
-        />
-      ))}
-
-      {/* Halo ring (if applicable) */}
-      {(type === 'halo' || type === 'hidden-halo') && (
-        <mesh
-          position={[0, type === 'hidden-halo' ? baseHeight * 0.5 : baseHeight + 0.08, 0]}
           castShadow
         >
-          <torusGeometry args={[0.28, 0.025, 16, 48]} />
+          <cylinderGeometry args={[prongTipWidth, prongBaseWidth, prongHeight, 8]} />
           <meshStandardMaterial
             color={material.color}
             metalness={material.metalness}
             roughness={material.roughness}
-            envMapIntensity={1.2}
+            envMapIntensity={1.5}
+          />
+        </mesh>
+      ))}
+
+      {/* Halo - small ring of stones around main stone */}
+      {type === 'halo' && (
+        <mesh position={[0, baseY + 0.12, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+          <torusGeometry args={[stoneScale * 0.6, 0.025, 12, 32]} />
+          <meshStandardMaterial
+            color={material.color}
+            metalness={material.metalness}
+            roughness={material.roughness}
+            envMapIntensity={1.5}
           />
         </mesh>
       )}
 
-      {/* Basket (decorative under-gallery) */}
+      {/* Hidden halo - sits lower, partially hidden */}
+      {type === 'hidden-halo' && (
+        <mesh position={[0, baseY + 0.06, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+          <torusGeometry args={[stoneScale * 0.5, 0.02, 12, 32]} />
+          <meshStandardMaterial
+            color={material.color}
+            metalness={material.metalness}
+            roughness={material.roughness}
+            envMapIntensity={1.5}
+          />
+        </mesh>
+      )}
+
+      {/* Basket - decorative gallery under the stone */}
       {type === 'basket' && (
         <group>
-          {/* Basket bars connecting prongs */}
           {[0, 1, 2, 3].map((i) => {
-            const angle = (i / 4) * Math.PI * 2 + Math.PI / 4;
-            const x = Math.cos(angle) * 0.12;
-            const z = Math.sin(angle) * 0.12;
+            const angle = ((i * 90 + 45) * Math.PI) / 180;
+            const x = Math.sin(angle) * prongRadius * 0.6;
+            const z = Math.cos(angle) * prongRadius * 0.6;
             return (
               <mesh
                 key={`basket-${i}`}
-                position={[x, baseHeight + 0.1, z]}
-                rotation={[0, -angle, Math.PI / 6]}
+                position={[x, baseY + 0.1, z]}
+                rotation={[0.3, angle, 0]}
                 castShadow
               >
-                <cylinderGeometry args={[0.012, 0.012, 0.15, 8]} />
+                <cylinderGeometry args={[0.008, 0.01, 0.1, 6]} />
                 <meshStandardMaterial
                   color={material.color}
                   metalness={material.metalness}
                   roughness={material.roughness}
-                  envMapIntensity={1.2}
+                  envMapIntensity={1.5}
                 />
               </mesh>
             );

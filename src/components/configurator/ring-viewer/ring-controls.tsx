@@ -14,19 +14,19 @@ export function RingControls({ enableZoom = true, autoRotate = false }: RingCont
   const { camera } = useThree();
 
   useEffect(() => {
-    // Set initial camera position for a good ring view
-    camera.position.set(0, 2, 5);
-    camera.lookAt(0, 0, 0);
+    // Camera positioned to view ring at nice angle (like reference images)
+    camera.position.set(0, 1, 3);
+    camera.lookAt(0, 0.3, 0);
   }, [camera]);
 
   return (
     <OrbitControls
       enablePan={false}
       enableZoom={enableZoom}
-      minDistance={3}
-      maxDistance={10}
-      minPolarAngle={Math.PI / 6}
-      maxPolarAngle={Math.PI / 1.5}
+      minDistance={2}
+      maxDistance={12}
+      minPolarAngle={0.1}
+      maxPolarAngle={Math.PI - 0.1}
       autoRotate={autoRotate}
       autoRotateSpeed={1}
       touches={{

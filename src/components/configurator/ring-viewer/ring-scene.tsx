@@ -10,30 +10,29 @@ interface RingSceneProps {
 export function RingScene({ children }: RingSceneProps) {
   return (
     <>
-      {/* Ambient light for overall illumination */}
-      <ambientLight intensity={0.4} />
+      {/* Soft ambient light */}
+      <ambientLight intensity={0.5} />
 
-      {/* Key light - main directional light */}
+      {/* Main key light - from upper right front */}
       <directionalLight
-        position={[5, 5, 5]}
-        intensity={1}
+        position={[3, 4, 4]}
+        intensity={1.2}
         castShadow
-        shadow-mapSize={[1024, 1024]}
+        shadow-mapSize={[2048, 2048]}
       />
 
-      {/* Fill light - softer, from opposite side */}
-      <directionalLight position={[-5, 3, -5]} intensity={0.5} />
+      {/* Fill light - softer, from left */}
+      <directionalLight position={[-4, 2, 2]} intensity={0.6} />
 
-      {/* Rim light - from behind for edge definition */}
-      <directionalLight position={[0, 5, -8]} intensity={0.3} />
+      {/* Back light - for rim lighting and sparkle */}
+      <directionalLight position={[0, 3, -4]} intensity={0.4} />
 
-      {/* Bottom fill - subtle uplight for metal reflections */}
-      <pointLight position={[0, -3, 0]} intensity={0.2} />
+      {/* Top light - for diamond sparkle */}
+      <pointLight position={[0, 5, 0]} intensity={0.5} />
 
-      {/* Environment map for realistic metal reflections */}
+      {/* Environment map for realistic reflections */}
       <Environment preset="studio" />
 
-      {/* Ring model and other 3D content */}
       {children}
     </>
   );

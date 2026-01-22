@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { BandModel } from './band-model';
 import { StoneModel } from './stone-model';
@@ -15,42 +14,57 @@ interface RingModelProps {
 export function RingModel({ config }: RingModelProps) {
   const groupRef = useRef<THREE.Group>(null);
 
-  // Calculate stone positions based on count
+  // Ring dimensions - based on reference images
+  const ringRadius = 0.8; // Radius of the ring (center of band)
+  const bandTubeRadius = 0.06; // Thickness of the band tube
+
+  // Diamond sits at the TOP of the ring (12 o'clock position)
+  // The top of the ring band is at Y = ringRadius
+  const settingBaseY = ringRadius; // Where the setting attaches to band
+
+  // Stone configuration
+  const stoneScale = config.stones.count === 1 ? 0.45 : config.stones.count === 2 ? 0.35 : 0.3;
+
+  // Stone positions - relative to setting position
   const stonePositions: [number, number, number][] = [];
-  const stoneScale = config.stones.count === 1 ? 0.4 : config.stones.count === 2 ? 0.32 : 0.28;
+  const stoneHeight = settingBaseY + 0.35; // Height above ring center
 
   if (config.stones.count === 1) {
-    stonePositions.push([0, 0.5, 0]);
+    stonePositions.push([0, stoneHeight, 0]);
   } else if (config.stones.count === 2) {
-    // Toi et moi style - two stones side by side
-    stonePositions.push([-0.2, 0.45, 0]);
-    stonePositions.push([0.2, 0.45, 0]);
+    stonePositions.push([-0.18, stoneHeight - 0.05, 0]);
+    stonePositions.push([0.18, stoneHeight - 0.05, 0]);
   } else {
-    // Three stone - center larger, two smaller on sides
-    stonePositions.push([0, 0.5, 0]); // Center
-    stonePositions.push([-0.3, 0.4, 0]); // Left
-    stonePositions.push([0.3, 0.4, 0]); // Right
+    stonePositions.push([0, stoneHeight, 0]);
+    stonePositions.push([-0.28, stoneHeight - 0.1, 0]);
+    stonePositions.push([0.28, stoneHeight - 0.1, 0]);
   }
 
   return (
-    <group ref={groupRef} rotation={[Math.PI / 2, 0, 0]}>
-      {/* Band */}
-      <BandModel config={config.band} material={config.material} />
+    <group ref={groupRef}>
+      {/* Band - the circular ring part */}
+      <BandModel
+        config={config.band}
+        material={config.material}
+        ringRadius={ringRadius}
+        tubeRadius={bandTubeRadius}
+      />
 
-      {/* Head/Setting with prongs */}
+      {/* Head/Setting with prongs - sits at top of ring */}
       <HeadModel
         config={config.head}
         material={config.material}
-        bandInnerRadius={config.band.innerRadius}
+        baseY={settingBaseY}
+        stoneScale={stoneScale}
       />
 
-      {/* Center Stone(s) */}
+      {/* Diamond(s) */}
       {stonePositions.map((position, index) => (
         <StoneModel
           key={index}
           type={config.stones.type}
           position={position}
-          scale={index === 0 && config.stones.count === 3 ? stoneScale * 1.2 : stoneScale}
+          scale={index === 0 && config.stones.count === 3 ? stoneScale * 1.15 : stoneScale}
         />
       ))}
     </group>
