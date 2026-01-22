@@ -3,6 +3,7 @@
 import { RingViewer } from './ring-viewer';
 import { BottomBar } from './bottom-bar/bottom-bar';
 import { ConfigSidebar } from './config-sidebar/config-sidebar';
+import { UserInfoDialog } from './user-info-dialog';
 
 export function ConfiguratorLayout() {
   return (
@@ -21,6 +22,9 @@ export function ConfiguratorLayout() {
 
       {/* Fixed Bottom Bar */}
       <BottomBar />
+
+      {/* User Info Collection Dialog */}
+      <UserInfoDialog />
     </div>
   );
 }
