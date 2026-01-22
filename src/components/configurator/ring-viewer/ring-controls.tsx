@@ -14,9 +14,9 @@ export function RingControls({ enableZoom = true, autoRotate = false }: RingCont
   const { camera } = useThree();
 
   useEffect(() => {
-    // Camera positioned to view ring at nice angle (like reference images)
-    camera.position.set(0, 1, 3);
-    camera.lookAt(0, 0.3, 0);
+    // Camera positioned further back to show full ring centered
+    camera.position.set(0, 0.5, 4.5);
+    camera.lookAt(0, 0.2, 0);
   }, [camera]);
 
   return (

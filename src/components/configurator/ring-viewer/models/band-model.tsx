@@ -30,11 +30,14 @@ export function BandModel({ config, material, ringRadius, tubeRadius }: BandMode
 
   return (
     <mesh ref={meshRef} geometry={geometry} castShadow receiveShadow>
-      <meshStandardMaterial
+      <meshPhysicalMaterial
         color={material.color}
-        metalness={material.metalness}
-        roughness={material.roughness}
-        envMapIntensity={1.5}
+        metalness={1}
+        roughness={0.15}
+        clearcoat={0.8}
+        clearcoatRoughness={0.1}
+        reflectivity={1}
+        envMapIntensity={2}
       />
     </mesh>
   );

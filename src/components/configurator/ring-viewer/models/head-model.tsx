@@ -66,22 +66,28 @@ export function HeadModel({ config, material, baseY, stoneScale }: HeadModelProp
         {/* Bezel collar */}
         <mesh position={[0, baseY + 0.18, 0]} castShadow>
           <cylinderGeometry args={[stoneScale * 0.55, stoneScale * 0.6, 0.22, 32, 1, true]} />
-          <meshStandardMaterial
+          <meshPhysicalMaterial
             color={material.color}
-            metalness={material.metalness}
-            roughness={material.roughness}
-            envMapIntensity={1.5}
+            metalness={1}
+            roughness={0.15}
+            clearcoat={0.8}
+            clearcoatRoughness={0.1}
+            reflectivity={1}
+            envMapIntensity={2}
             side={THREE.DoubleSide}
           />
         </mesh>
         {/* Small base connecting to band */}
         <mesh position={[0, baseY + 0.03, 0]} castShadow>
           <cylinderGeometry args={[0.06, 0.08, 0.06, 16]} />
-          <meshStandardMaterial
+          <meshPhysicalMaterial
             color={material.color}
-            metalness={material.metalness}
-            roughness={material.roughness}
-            envMapIntensity={1.5}
+            metalness={1}
+            roughness={0.15}
+            clearcoat={0.8}
+            clearcoatRoughness={0.1}
+            reflectivity={1}
+            envMapIntensity={2}
           />
         </mesh>
       </group>
@@ -109,11 +115,14 @@ export function HeadModel({ config, material, baseY, stoneScale }: HeadModelProp
           castShadow
         >
           <cylinderGeometry args={[prongTipWidth, prongBaseWidth, prongHeight, 8]} />
-          <meshStandardMaterial
+          <meshPhysicalMaterial
             color={material.color}
-            metalness={material.metalness}
-            roughness={material.roughness}
-            envMapIntensity={1.5}
+            metalness={1}
+            roughness={0.15}
+            clearcoat={0.8}
+            clearcoatRoughness={0.1}
+            reflectivity={1}
+            envMapIntensity={2}
           />
         </mesh>
       ))}
@@ -122,11 +131,14 @@ export function HeadModel({ config, material, baseY, stoneScale }: HeadModelProp
       {type === 'halo' && (
         <mesh position={[0, baseY + 0.12, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
           <torusGeometry args={[stoneScale * 0.6, 0.025, 12, 32]} />
-          <meshStandardMaterial
+          <meshPhysicalMaterial
             color={material.color}
-            metalness={material.metalness}
-            roughness={material.roughness}
-            envMapIntensity={1.5}
+            metalness={1}
+            roughness={0.15}
+            clearcoat={0.8}
+            clearcoatRoughness={0.1}
+            reflectivity={1}
+            envMapIntensity={2}
           />
         </mesh>
       )}
@@ -135,11 +147,14 @@ export function HeadModel({ config, material, baseY, stoneScale }: HeadModelProp
       {type === 'hidden-halo' && (
         <mesh position={[0, baseY + 0.06, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
           <torusGeometry args={[stoneScale * 0.5, 0.02, 12, 32]} />
-          <meshStandardMaterial
+          <meshPhysicalMaterial
             color={material.color}
-            metalness={material.metalness}
-            roughness={material.roughness}
-            envMapIntensity={1.5}
+            metalness={1}
+            roughness={0.15}
+            clearcoat={0.8}
+            clearcoatRoughness={0.1}
+            reflectivity={1}
+            envMapIntensity={2}
           />
         </mesh>
       )}

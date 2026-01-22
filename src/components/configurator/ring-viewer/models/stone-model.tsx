@@ -115,16 +115,22 @@ export function StoneModel({
   return (
     <mesh ref={meshRef} geometry={geometry} position={position} castShadow>
       <meshPhysicalMaterial
-        color={type === 'natural' ? '#ffffff' : '#f0f8ff'}
-        metalness={0.1}
-        roughness={0.0}
-        transmission={0.95}
-        thickness={scale}
-        ior={2.42}
+        color="#ffffff"
+        metalness={0}
+        roughness={0}
+        transmission={1}
+        thickness={scale * 3}
+        ior={2.4}
         clearcoat={1}
         clearcoatRoughness={0}
-        envMapIntensity={2}
+        reflectivity={1}
+        envMapIntensity={4}
         transparent
+        specularIntensity={1}
+        specularColor="#ffffff"
+        sheen={0.5}
+        sheenRoughness={0.2}
+        sheenColor="#ffffff"
       />
     </mesh>
   );

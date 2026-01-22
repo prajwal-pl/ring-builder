@@ -2,6 +2,7 @@
 
 import { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
+import * as THREE from 'three';
 import { RingScene } from './ring-scene';
 import { RingControls } from './ring-controls';
 import { RingModel } from './models/ring-model';
@@ -15,8 +16,8 @@ export function RingCanvas({ config }: RingCanvasProps) {
   return (
     <Canvas
       camera={{
-        position: [0, 2, 5],
-        fov: 45,
+        position: [0, 0.5, 4.5],
+        fov: 40,
         near: 0.1,
         far: 100,
       }}
@@ -25,6 +26,8 @@ export function RingCanvas({ config }: RingCanvasProps) {
         antialias: true,
         alpha: true,
         powerPreference: 'high-performance',
+        toneMapping: THREE.ACESFilmicToneMapping,
+        toneMappingExposure: 1.2,
       }}
       style={{ background: 'transparent' }}
     >
