@@ -37,8 +37,8 @@ export function RingStyleStep() {
       title="Let's start designing your ring"
       subtitle="Get started quickly. Don't worry, you'll be able to fully customize your design in our 3D Ring Builder."
     >
-      <div className="flex flex-col items-center gap-12 max-w-5xl mx-auto">
-        <div className="bg-secondary/40 backdrop-blur-sm p-1.5 rounded-2xl border border-border/40 shadow-sm animate-in fade-in zoom-in-95 duration-500">
+      <div className="flex flex-col items-center gap-8 w-full">
+        <div className="bg-secondary/40 backdrop-blur-sm p-1 rounded-xl border border-border/40 shadow-sm animate-in fade-in zoom-in-95 duration-500">
           <ToggleGroup
             type="single"
             value={state.selections.metalColor || undefined}
@@ -49,13 +49,13 @@ export function RingStyleStep() {
               <ToggleGroupItem
                 key={metal.id}
                 value={metal.id}
-                className="rounded-xl px-5 py-2.5 data-[state=on]:bg-background data-[state=on]:shadow-md data-[state=on]:text-primary transition-all duration-300"
+                className="rounded-lg px-4 py-2 data-[state=on]:bg-background data-[state=on]:shadow-sm data-[state=on]:text-primary transition-all duration-300 h-9"
               >
                 <span
-                  className="w-5 h-5 rounded-full border border-white/40 shadow-inner mr-2.5"
+                  className="w-4 h-4 rounded-full border border-white/40 shadow-inner mr-2"
                   style={{ backgroundColor: metal.hexColor }}
                 />
-                <span className="text-sm font-semibold tracking-tight">{metal.label}</span>
+                <span className="text-xs font-bold tracking-tight">{metal.label}</span>
               </ToggleGroupItem>
             ))}
           </ToggleGroup>

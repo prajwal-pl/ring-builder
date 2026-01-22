@@ -21,23 +21,25 @@ export function SelectionGrid<T>({
 }: SelectionGridProps<T>) {
   return (
     <div
-      className={cn('grid gap-6 w-full max-w-5xl mx-auto p-2', {
-        'grid-cols-1 sm:grid-cols-2 max-w-2xl': columns === 2,
-        'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3': columns === 3,
+      className={cn('grid gap-4 w-full justify-center mx-auto', {
+        'grid-cols-1 sm:grid-cols-2 max-w-lg': columns === 2,
+        'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 max-w-6xl': columns === 3,
       })}
     >
       {options.map((option, index) => (
         <div 
           key={String(option.id)}
-          className="animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-both"
-          style={{ animationDelay: `${index * 50}ms` }}
+          className="animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-both w-full flex justify-center"
+          style={{ animationDelay: `${index * 40}ms` }}
         >
-          <SelectionCard
-            option={option}
-            isSelected={selectedId === option.id}
-            onSelect={onSelect}
-            variant={variant}
-          />
+          <div className="w-full max-w-[220px]">
+            <SelectionCard
+              option={option}
+              isSelected={selectedId === option.id}
+              onSelect={onSelect}
+              variant={variant}
+            />
+          </div>
         </div>
       ))}
     </div>

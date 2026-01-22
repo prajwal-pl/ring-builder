@@ -22,24 +22,24 @@ export function SelectionCard<T>({
       type="button"
       onClick={() => onSelect(option.id)}
       className={cn(
-        'group relative flex flex-col items-center justify-center rounded-2xl border transition-all duration-300',
+        'group relative flex flex-col items-center justify-center rounded-2xl border transition-all duration-300 w-full',
         'hover:border-primary/50 hover:shadow-xl hover:-translate-y-0.5',
         'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/20',
         isSelected
           ? 'border-primary bg-primary/5 shadow-lg ring-1 ring-primary/20'
           : 'border-border bg-card shadow-sm hover:shadow-md',
-        variant === 'default' ? 'p-6 min-h-[160px]' : 'p-4 min-h-[70px]'
+        variant === 'default' ? 'p-5 h-[140px]' : 'p-3 h-[60px]'
       )}
     >
       {isSelected && (
-        <div className="absolute top-3 right-3 bg-primary text-primary-foreground rounded-full p-0.5 shadow-sm animate-in zoom-in duration-200">
+        <div className="absolute top-2 right-2 bg-primary text-primary-foreground rounded-full p-0.5 shadow-sm animate-in zoom-in duration-200 z-10">
           <Check className="size-3" />
         </div>
       )}
 
       {option.icon && variant === 'default' && (
         <div className={cn(
-          "w-14 h-14 mb-4 flex items-center justify-center transition-transform duration-300 group-hover:scale-110",
+          "w-12 h-12 mb-3 flex items-center justify-center transition-transform duration-300 group-hover:scale-110",
           isSelected ? "text-primary" : "text-muted-foreground"
         )}>
           {option.icon}
@@ -48,8 +48,8 @@ export function SelectionCard<T>({
 
       <span
         className={cn(
-          'font-semibold transition-colors duration-200',
-          variant === 'default' ? 'text-base' : 'text-sm',
+          'font-bold transition-colors duration-200 tracking-tight',
+          variant === 'default' ? 'text-sm' : 'text-xs',
           isSelected ? 'text-primary' : 'text-foreground'
         )}
       >
@@ -58,7 +58,7 @@ export function SelectionCard<T>({
       
       {option.description && variant === 'default' && (
         <span className={cn(
-          "text-xs mt-2 text-center transition-colors duration-200",
+          "text-[10px] mt-1 text-center transition-colors duration-200 leading-tight px-2 line-clamp-2",
           isSelected ? "text-primary/70" : "text-muted-foreground"
         )}>
           {option.description}

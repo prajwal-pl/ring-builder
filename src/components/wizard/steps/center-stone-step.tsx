@@ -41,23 +41,25 @@ export function CenterStoneStep() {
       title="Choose your center stone"
       subtitle="The star of the show - your main diamond"
     >
-      <div className="flex flex-col items-center gap-8">
-        <ToggleGroup
-          type="single"
-          value={state.selections.stoneType || undefined}
-          onValueChange={handleTypeChange}
-          className="bg-muted p-1 rounded-full"
-        >
-          {stoneTypeOptions.map((option) => (
-            <ToggleGroupItem
-              key={option.id}
-              value={option.id}
-              className="rounded-full px-4 py-2 data-[state=on]:bg-background data-[state=on]:shadow-sm"
-            >
-              {option.label}
-            </ToggleGroupItem>
-          ))}
-        </ToggleGroup>
+      <div className="flex flex-col items-center gap-8 w-full">
+        <div className="bg-secondary/40 backdrop-blur-sm p-1 rounded-xl border border-border/40 shadow-sm animate-in fade-in zoom-in-95 duration-500">
+          <ToggleGroup
+            type="single"
+            value={state.selections.stoneType || undefined}
+            onValueChange={handleTypeChange}
+            className="gap-1"
+          >
+            {stoneTypeOptions.map((option) => (
+              <ToggleGroupItem
+                key={option.id}
+                value={option.id}
+                className="rounded-lg px-6 py-2 data-[state=on]:bg-background data-[state=on]:shadow-sm data-[state=on]:text-primary transition-all duration-300 h-9 text-xs font-bold tracking-tight"
+              >
+                {option.label}
+              </ToggleGroupItem>
+            ))}
+          </ToggleGroup>
+        </div>
 
         <SelectionGrid
           options={stoneShapes}
