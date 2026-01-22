@@ -21,19 +21,24 @@ export function SelectionGrid<T>({
 }: SelectionGridProps<T>) {
   return (
     <div
-      className={cn('grid gap-4', {
-        'grid-cols-1 sm:grid-cols-2': columns === 2,
+      className={cn('grid gap-6 w-full max-w-5xl mx-auto p-2', {
+        'grid-cols-1 sm:grid-cols-2 max-w-2xl': columns === 2,
         'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3': columns === 3,
       })}
     >
-      {options.map((option) => (
-        <SelectionCard
+      {options.map((option, index) => (
+        <div 
           key={String(option.id)}
-          option={option}
-          isSelected={selectedId === option.id}
-          onSelect={onSelect}
-          variant={variant}
-        />
+          className="animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-both"
+          style={{ animationDelay: `${index * 50}ms` }}
+        >
+          <SelectionCard
+            option={option}
+            isSelected={selectedId === option.id}
+            onSelect={onSelect}
+            variant={variant}
+          />
+        </div>
       ))}
     </div>
   );

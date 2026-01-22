@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { BandModel } from './band-model';
 import { StoneModel } from './stone-model';
@@ -13,6 +14,14 @@ interface RingModelProps {
 
 export function RingModel({ config }: RingModelProps) {
   const groupRef = useRef<THREE.Group>(null);
+
+  // Gentle oscillating rotation (left to right)
+  useFrame((state) => {
+    if (groupRef.current) {
+      // Slow oscillation: rotates about 30 degrees left and right
+      groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.4;
+    }
+  });
 
   // Ring dimensions from config
   // Scale factor for good visibility

@@ -24,16 +24,25 @@ export function BottomBar() {
 
   return (
     <>
-      <div className="sticky bottom-0 border-t border-border bg-background px-4 py-4 lg:px-6">
-        <div className="flex items-center justify-between">
-          <PriceDisplay price={calculatedPrice} />
+      <div className="sticky bottom-0 border-t border-border/40 bg-background/80 backdrop-blur-lg px-6 py-5 lg:px-8 z-50">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          <div className="flex-1">
+            <PriceDisplay price={calculatedPrice} />
+          </div>
 
-          <div className="flex items-center gap-3">
-            <Button variant="outline" onClick={handleSave}>
-              Save
+          <div className="flex items-center gap-4">
+            <Button 
+              variant="outline" 
+              onClick={handleSave}
+              className="hidden sm:inline-flex border-border/60 hover:bg-secondary/50 transition-all active:scale-95"
+            >
+              Save Design
             </Button>
-            <Button onClick={handleNext}>
-              Next →
+            <Button 
+              onClick={handleNext}
+              className="bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-primary/30 hover:scale-[1.02] active:scale-95 transition-all px-8 py-6 h-auto text-base font-semibold"
+            >
+              Continue to Stones →
             </Button>
           </div>
         </div>
