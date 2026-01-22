@@ -27,7 +27,7 @@ export function ConfigPanel({ title, isOpen, onToggle, children }: ConfigPanelPr
           )}
         />
       </CollapsibleTrigger>
-      <CollapsibleContent className="px-4 py-4 border-b border-border">
+      <CollapsibleContent className="px-4 py-4 border-b border-border max-h-[60vh] overflow-y-auto">
         {children}
       </CollapsibleContent>
     </Collapsible>

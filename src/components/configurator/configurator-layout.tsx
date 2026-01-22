@@ -1,20 +1,20 @@
 'use client';
 
-import { RingViewerPlaceholder } from './ring-viewer/ring-viewer-placeholder';
+import { RingViewer } from './ring-viewer';
 import { BottomBar } from './bottom-bar/bottom-bar';
 import { ConfigSidebar } from './config-sidebar/config-sidebar';
 
 export function ConfiguratorLayout() {
   return (
-    <div className="min-h-screen flex flex-col bg-background">
-      <div className="flex-1 flex flex-col lg:flex-row">
+    <div className="h-screen flex flex-col bg-background overflow-hidden">
+      <div className="flex-1 flex flex-col lg:flex-row min-h-0">
         {/* Ring Viewer - 70% on desktop */}
-        <div className="flex-1 lg:w-[70%]">
-          <RingViewerPlaceholder />
+        <div className="flex-1 lg:w-[70%] overflow-hidden">
+          <RingViewer />
         </div>
 
         {/* Config Sidebar - 30% on desktop */}
-        <div className="lg:w-[30%] border-l border-border bg-background">
+        <div className="lg:w-[30%] border-l border-border bg-background overflow-hidden flex flex-col">
           <ConfigSidebar />
         </div>
       </div>
