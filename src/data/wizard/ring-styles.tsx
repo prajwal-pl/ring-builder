@@ -1,129 +1,53 @@
+import Image from 'next/image';
 import type { RingStyleOption } from '@/types/wizard';
-
-// Simple SVG ring icons for each style
-const SolitaireIcon = (
-  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5">
-    <circle cx="24" cy="14" r="6" />
-    <path d="M18 20v20a2 2 0 002 2h8a2 2 0 002-2V20" />
-    <ellipse cx="24" cy="42" rx="10" ry="3" />
-  </svg>
-);
-
-const HaloIcon = (
-  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5">
-    <circle cx="24" cy="14" r="5" />
-    <circle cx="24" cy="14" r="9" strokeDasharray="2 2" />
-    <path d="M18 20v20a2 2 0 002 2h8a2 2 0 002-2V20" />
-    <ellipse cx="24" cy="42" rx="10" ry="3" />
-  </svg>
-);
-
-const HiddenHaloIcon = (
-  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5">
-    <circle cx="24" cy="14" r="6" />
-    <path d="M18 18h12" strokeDasharray="2 2" />
-    <path d="M18 20v20a2 2 0 002 2h8a2 2 0 002-2V20" />
-    <ellipse cx="24" cy="42" rx="10" ry="3" />
-  </svg>
-);
-
-const BezelIcon = (
-  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5">
-    <circle cx="24" cy="14" r="6" />
-    <rect x="16" y="8" width="16" height="12" rx="2" />
-    <path d="M18 20v20a2 2 0 002 2h8a2 2 0 002-2V20" />
-    <ellipse cx="24" cy="42" rx="10" ry="3" />
-  </svg>
-);
-
-const CathedralIcon = (
-  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5">
-    <circle cx="24" cy="12" r="5" />
-    <path d="M19 17c-3 3-3 8-3 15a2 2 0 002 2h12a2 2 0 002-2c0-7 0-12-3-15" />
-    <ellipse cx="24" cy="42" rx="10" ry="3" />
-  </svg>
-);
-
-const FullPaveIcon = (
-  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5">
-    <circle cx="24" cy="14" r="6" />
-    <path d="M18 20v20a2 2 0 002 2h8a2 2 0 002-2V20" />
-    <circle cx="20" cy="26" r="1.5" />
-    <circle cx="28" cy="26" r="1.5" />
-    <circle cx="20" cy="32" r="1.5" />
-    <circle cx="28" cy="32" r="1.5" />
-    <circle cx="20" cy="38" r="1.5" />
-    <circle cx="28" cy="38" r="1.5" />
-    <ellipse cx="24" cy="42" rx="10" ry="3" />
-  </svg>
-);
-
-const ToiEtMoiIcon = (
-  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5">
-    <circle cx="18" cy="14" r="5" />
-    <circle cx="30" cy="14" r="5" />
-    <path d="M16 20v20a2 2 0 002 2h12a2 2 0 002-2V20" />
-    <ellipse cx="24" cy="42" rx="10" ry="3" />
-  </svg>
-);
-
-const ThreeStoneIcon = (
-  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5">
-    <circle cx="24" cy="12" r="6" />
-    <circle cx="14" cy="16" r="3" />
-    <circle cx="34" cy="16" r="3" />
-    <path d="M16 20v20a2 2 0 002 2h12a2 2 0 002-2V20" />
-    <ellipse cx="24" cy="42" rx="10" ry="3" />
-  </svg>
-);
 
 export const ringStyles: RingStyleOption[] = [
   {
     id: 'solitaire',
     label: 'Solitaire',
     description: 'Timeless and elegant',
-    icon: SolitaireIcon,
+    icon: <Image src="/ring-design/solitaire-yellow.png" alt="Solitaire" width={48} height={48} />,
   },
   {
     id: 'halo',
     label: 'Halo',
     description: 'Captivating and radiant',
-    icon: HaloIcon,
+    icon: <Image src="/ring-design/halo-yellow.png" alt="Halo" width={48} height={48} />,
   },
   {
     id: 'hidden-halo',
     label: 'Hidden Halo',
     description: 'Subtle yet brilliant',
-    icon: HiddenHaloIcon,
+    icon: <Image src="/ring-design/hiddenhalo-yellow.png" alt="Hidden Halo" width={48} height={48} />,
   },
   {
     id: 'bezel',
     label: 'Bezel',
     description: 'Sleek and contemporary',
-    icon: BezelIcon,
+    icon: <Image src="/ring-design/bezel-yellow.png" alt="Bezel" width={48} height={48} />,
   },
   {
     id: 'cathedral',
     label: 'Cathedral',
     description: 'Elevated and graceful',
-    icon: CathedralIcon,
+    icon: <Image src="/ring-design/cathedral-yellow.png" alt="Cathedral" width={48} height={48} />,
   },
   {
     id: 'full-pave',
     label: 'Full Pavé',
     description: 'Ornate and detailed',
-    icon: FullPaveIcon,
+    icon: <Image src="/ring-design/fullpave-yellow.png" alt="Full Pavé" width={48} height={48} />,
   },
   {
     id: 'toi-et-moi',
     label: 'Toi et Moi',
     description: 'Romantic and symbolic',
-    icon: ToiEtMoiIcon,
+    icon: <Image src="/ring-design/toietmoi-yellow.png" alt="Toi et Moi" width={48} height={48} />,
   },
   {
     id: 'three-stone',
     label: 'Three Stone',
     description: 'Timeless triple brilliance',
-    icon: ThreeStoneIcon,
+    icon: <Image src="/ring-design/threestone-yellow.png" alt="Three Stone" width={48} height={48} />,
   },
 ];

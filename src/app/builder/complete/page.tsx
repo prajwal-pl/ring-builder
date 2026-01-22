@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useWizard } from '@/hooks/use-wizard';
 import { useWizardNavigation } from '@/hooks/use-wizard-navigation';
 import { Button } from '@/components/ui/button';
@@ -11,6 +12,7 @@ import { caratSizes } from '@/data/wizard/carat-sizes';
 import { timelines } from '@/data/wizard/timelines';
 
 export default function CompletePage() {
+  const router = useRouter();
   const { state } = useWizard();
   const { reset } = useWizardNavigation();
   const { selections } = state;
@@ -61,7 +63,7 @@ export default function CompletePage() {
           </div>
 
           <div className="mt-8 flex flex-col gap-3">
-            <Button size="lg" className="w-full">
+            <Button size="lg" className="w-full" onClick={() => router.push('/builder/configurator')}>
               Continue to 3D Builder
             </Button>
             <Button variant="outline" size="lg" className="w-full" onClick={reset}>
