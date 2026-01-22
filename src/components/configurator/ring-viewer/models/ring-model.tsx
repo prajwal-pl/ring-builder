@@ -14,9 +14,11 @@ interface RingModelProps {
 export function RingModel({ config }: RingModelProps) {
   const groupRef = useRef<THREE.Group>(null);
 
-  // Ring dimensions - based on reference images
-  const ringRadius = 0.8; // Radius of the ring (center of band)
-  const bandTubeRadius = 0.06; // Thickness of the band tube
+  // Ring dimensions from config
+  // Scale up for better visibility (the calculated values are quite small)
+  const scaleFactor = 1.2;
+  const ringRadius = config.band.innerRadius * scaleFactor; // From ring size
+  const bandTubeRadius = Math.max(0.04, config.band.thickness * 0.3 * scaleFactor); // From band width
 
   // Diamond sits at the TOP of the ring (12 o'clock position)
   // The top of the ring band is at Y = ringRadius
