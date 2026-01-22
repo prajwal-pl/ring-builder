@@ -34,13 +34,13 @@ export function BottomBar() {
             <Button 
               variant="outline" 
               onClick={handleSave}
-              className="hidden sm:inline-flex border-border/60 hover:bg-secondary/50 transition-all active:scale-95"
+              className="hidden sm:inline-flex border-border/60 hover:bg-secondary/50 transition-all active:scale-95 h-12 px-8 font-semibold"
             >
               Save Design
             </Button>
             <Button 
               onClick={handleNext}
-              className="bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-primary/30 hover:scale-[1.02] active:scale-95 transition-all px-8 py-6 h-auto text-base font-semibold"
+              className="bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-primary/30 hover:scale-[1.02] active:scale-95 transition-all h-12 px-8 font-semibold"
             >
               Continue to Stones →
             </Button>

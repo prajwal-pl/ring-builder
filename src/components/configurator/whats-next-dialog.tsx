@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { cn } from '@/lib/utils';
 
 interface WhatsNextDialogProps {
   open: boolean;
@@ -94,29 +95,38 @@ export function WhatsNextDialog({ open, onOpenChange }: WhatsNextDialogProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         showCloseButton={!isLoading}
-        className="sm:max-w-lg p-0 gap-0 overflow-hidden"
+        className="sm:max-w-md p-0 gap-0 overflow-hidden border-none shadow-2xl rounded-[32px] bg-background/80 backdrop-blur-2xl"
         onPointerDownOutside={(e) => isLoading && e.preventDefault()}
         onEscapeKeyDown={(e) => isLoading && e.preventDefault()}
       >
         {isLoading ? (
-          <div className="flex flex-col items-center justify-center py-20 px-6">
-            <Spinner className="size-10 text-primary mb-4" />
-            <p className="text-lg font-medium text-foreground">
-              Reviewing your custom ring...
-            </p>
+          <div className="flex flex-col items-center justify-center py-24 px-8 text-center space-y-6">
+            <div className="relative">
+              <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl animate-pulse" />
+              <Spinner className="size-12 text-primary relative z-10" />
+            </div>
+            <div className="space-y-2">
+              <p className="text-xl font-bold tracking-tight text-foreground">
+                Reviewing your masterpiece...
+              </p>
+              <p className="text-sm text-muted-foreground animate-pulse">
+                Perfecting every detail of your unique design
+              </p>
+            </div>
           </div>
         ) : (
           <>
             {/* Logo and Header */}
-            <div className="text-center pt-6 px-6">
-              <div className="flex justify-center mb-4">
-                <div className="size-16 bg-black rounded flex items-center justify-center">
+            <div className="text-center pt-10 pb-6 px-8 relative">
+              <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-primary/[0.03] to-transparent -z-10" />
+              <div className="flex justify-center mb-6">
+                <div className="size-20 bg-primary rounded-3xl flex items-center justify-center shadow-xl shadow-primary/20 transition-transform hover:scale-105 duration-500">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
-                    className="size-10 text-white"
+                    className="size-12 text-primary-foreground"
                     stroke="currentColor"
-                    strokeWidth="1.5"
+                    strokeWidth="1.2"
                   >
                     <path d="M12 2L2 9L12 22L22 9L12 2Z" />
                     <path d="M2 9H22" />
@@ -125,94 +135,81 @@ export function WhatsNextDialog({ open, onOpenChange }: WhatsNextDialogProps) {
                   </svg>
                 </div>
               </div>
-              <h2 className="text-xl font-semibold mb-2">What&apos;s Next?</h2>
-              <p className="text-sm text-muted-foreground leading-relaxed max-w-sm mx-auto">
-                Whether you want this exact design or something completely
-                different, our engagement ring specialists are standing by to help
-                make it a reality.
+              <h2 className="text-2xl font-bold tracking-tight mb-3">What&apos;s Next?</h2>
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto font-medium">
+                Our specialists are ready to help you bring this custom vision to life with precision and care.
               </p>
             </div>
 
             {/* Action Buttons */}
-            <div className="px-6 py-6 space-y-3">
-              <div>
+            <div className="px-8 pb-10 space-y-4">
+              <div className="group">
                 <Button
                   variant="outline"
-                  className="w-full h-12 justify-center gap-2"
+                  className="w-full h-14 justify-start gap-4 px-6 rounded-2xl border-border/40 hover:border-primary/40 hover:bg-primary/[0.02] transition-all duration-300 group-hover:shadow-md"
                   onClick={handleTextMe}
                 >
-                  <MessageCircleIcon className="size-5" />
-                  Text Me My Ring
+                  <div className="size-8 rounded-full bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                    <MessageCircleIcon className="size-4" />
+                  </div>
+                  <div className="flex flex-col items-start gap-0.5">
+                    <span className="text-sm font-bold">Text Me My Ring</span>
+                    <span className="text-[10px] text-muted-foreground font-medium">Link to return to your design anytime</span>
+                  </div>
                 </Button>
-                <p className="text-xs text-muted-foreground text-center mt-1.5">
-                  Get a link to return to your design anytime
-                </p>
               </div>
 
-              <div>
+              <div className="group">
                 <Button
                   variant="outline"
-                  className="w-full h-12 justify-center gap-2"
+                  className="w-full h-14 justify-start gap-4 px-6 rounded-2xl border-border/40 hover:border-primary/40 hover:bg-primary/[0.02] transition-all duration-300 group-hover:shadow-md"
                   onClick={handleSchedule}
                 >
-                  <CalendarIcon className="size-5" />
-                  Schedule Appointment
+                  <div className="size-8 rounded-full bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                    <CalendarIcon className="size-4" />
+                  </div>
+                  <div className="flex flex-col items-start gap-0.5">
+                    <span className="text-sm font-bold">Schedule Appointment</span>
+                    <span className="text-[10px] text-muted-foreground font-medium">Free consultation to discuss your vision</span>
+                  </div>
                 </Button>
-                <p className="text-xs text-muted-foreground text-center mt-1.5">
-                  Book a free consultation to discuss your design
-                </p>
               </div>
 
-              <div>
+              <div className="group">
                 <Button
                   variant="outline"
-                  className="w-full h-12 justify-center gap-2"
+                  className="w-full h-14 justify-start gap-4 px-6 rounded-2xl border-border/40 hover:border-primary/40 hover:bg-primary/[0.02] transition-all duration-300 group-hover:shadow-md"
                   onClick={handleEmail}
                 >
-                  <MailIcon className="size-5" />
-                  Email Us
+                  <div className="size-8 rounded-full bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                    <MailIcon className="size-4" />
+                  </div>
+                  <div className="flex flex-col items-start gap-0.5">
+                    <span className="text-sm font-bold">Email Us</span>
+                    <div className="flex items-center gap-1.5">
+                      <div className={cn("size-1.5 rounded-full animate-pulse", businessStatus.isOpen ? "bg-green-500" : "bg-orange-400")} />
+                      <span className="text-[10px] text-muted-foreground font-medium">We typically respond within 1 business day</span>
+                    </div>
+                  </div>
                 </Button>
-                <div className="text-center mt-1.5">
-                  <p className="text-xs flex items-center justify-center gap-1">
-                    <span
-                      className={`size-2 rounded-full ${
-                        businessStatus.isOpen ? 'bg-green-500' : 'bg-red-500'
-                      }`}
-                    />
-                    <span
-                      className={
-                        businessStatus.isOpen
-                          ? 'text-green-600'
-                          : 'text-red-500'
-                      }
-                    >
-                      {businessStatus.isOpen
-                        ? "We're currently open"
-                        : "We're currently closed"}
-                    </span>
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {businessStatus.message}
-                  </p>
-                </div>
               </div>
             </div>
 
             {/* Footer Actions */}
-            <div className="border-t border-border px-6 py-4 flex items-center justify-between bg-muted/30">
+            <div className="border-t border-border/20 px-8 py-5 flex items-center justify-between bg-primary/[0.02]">
               <button
                 onClick={handleKeepEditing}
-                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="flex items-center gap-2 text-xs font-bold text-muted-foreground hover:text-primary transition-colors"
               >
-                <ArrowLeftIcon className="size-4" />
-                Keep Editing Your Ring
+                <ArrowLeftIcon className="size-3.5" />
+                KEEP EDITING
               </button>
               <button
                 onClick={handleSaveDesign}
-                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="flex items-center gap-2 text-xs font-bold text-muted-foreground hover:text-primary transition-colors"
               >
-                <BookmarkIcon className="size-4" />
-                Just save design
+                <BookmarkIcon className="size-3.5" />
+                JUST SAVE DESIGN
               </button>
             </div>
           </>
