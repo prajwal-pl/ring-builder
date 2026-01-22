@@ -11,7 +11,10 @@ import { metalColors } from '@/data/wizard/metal-colors';
 import { caratSizes } from '@/data/wizard/carat-sizes';
 import { timelines } from '@/data/wizard/timelines';
 import { metalOptions } from '@/data/configurator/metals';
-import { diamondQualities, diamondClarities, diamondColors } from '@/data/configurator/diamonds';
+import { centerStoneOptions, diamondTypeOptions } from '@/data/configurator/diamonds';
+import { basketHaloOptions, prongCountOptions, prongTipsOptions, prongPaveOptions } from '@/data/configurator/head';
+import { bandStyleOptions, cathedralOptions, paveStyleOptions, fitOptions } from '@/data/configurator/band';
+import { engravingStyleOptions, surpriseStonesOptions } from '@/data/configurator/more';
 import { formatPrice, calculateSettingPrice } from '@/lib/configurator/pricing';
 import { loadConfiguratorState } from '@/lib/configurator/storage';
 import type { ConfiguratorState } from '@/types/configurator';
@@ -40,14 +43,41 @@ export default function CheckoutPage() {
   const selectedMetal = configuratorState
     ? metalOptions.find((m) => m.id === configuratorState.metal.headAndBandColor)
     : null;
-  const selectedQuality = configuratorState?.diamonds.quality
-    ? diamondQualities.find((q) => q.id === configuratorState.diamonds.quality)
+  const selectedCenterStones = configuratorState
+    ? centerStoneOptions.find((o) => o.id === configuratorState.diamonds.centerStones)
     : null;
-  const selectedClarity = configuratorState?.diamonds.clarity
-    ? diamondClarities.find((c) => c.id === configuratorState.diamonds.clarity)
+  const selectedDiamondType = configuratorState
+    ? diamondTypeOptions.find((o) => o.id === configuratorState.diamonds.diamondType)
     : null;
-  const selectedColor = configuratorState?.diamonds.color
-    ? diamondColors.find((c) => c.id === configuratorState.diamonds.color)
+  const selectedBasketHalo = configuratorState
+    ? basketHaloOptions.find((o) => o.id === configuratorState.head.basketHalo)
+    : null;
+  const selectedProngCount = configuratorState
+    ? prongCountOptions.find((o) => o.id === configuratorState.head.prongCount)
+    : null;
+  const selectedProngTips = configuratorState
+    ? prongTipsOptions.find((o) => o.id === configuratorState.head.prongTips)
+    : null;
+  const selectedProngPave = configuratorState
+    ? prongPaveOptions.find((o) => o.id === configuratorState.head.prongPave)
+    : null;
+  const selectedBandStyle = configuratorState
+    ? bandStyleOptions.find((o) => o.id === configuratorState.band.style)
+    : null;
+  const selectedCathedral = configuratorState
+    ? cathedralOptions.find((o) => o.id === configuratorState.band.cathedral)
+    : null;
+  const selectedPaveStyle = configuratorState
+    ? paveStyleOptions.find((o) => o.id === configuratorState.band.paveStyle)
+    : null;
+  const selectedFit = configuratorState
+    ? fitOptions.find((o) => o.id === configuratorState.band.fit)
+    : null;
+  const selectedEngravingStyle = configuratorState
+    ? engravingStyleOptions.find((o) => o.id === configuratorState.more.engravingStyle)
+    : null;
+  const selectedSurpriseStones = configuratorState
+    ? surpriseStonesOptions.find((o) => o.id === configuratorState.more.surpriseStones)
     : null;
 
   const totalPrice = configuratorState ? calculateSettingPrice(configuratorState) : 0;
@@ -70,10 +100,22 @@ export default function CheckoutPage() {
   ];
 
   const configuratorSummary = [
-    { label: 'Metal Color', value: selectedMetal?.label || 'Not selected' },
-    { label: 'Diamond Quality', value: selectedQuality?.label || 'Not selected' },
-    { label: 'Diamond Clarity', value: selectedClarity?.label || 'Not selected' },
-    { label: 'Diamond Color', value: selectedColor?.label || 'Not selected' },
+    { label: 'Metal', value: selectedMetal?.label || 'Not selected' },
+    { label: 'Center Stones', value: selectedCenterStones?.label || 'Not selected' },
+    { label: 'Diamond Type', value: selectedDiamondType?.label || 'Not selected' },
+    { label: 'Basket & Halo', value: selectedBasketHalo?.label || 'Not selected' },
+    { label: 'Prong Count', value: selectedProngCount?.label || 'Not selected' },
+    { label: 'Prong Tips', value: selectedProngTips?.label || 'Not selected' },
+    { label: 'Prong Pave', value: selectedProngPave?.label || 'Not selected' },
+    { label: 'Band Style', value: selectedBandStyle?.label || 'Not selected' },
+    { label: 'Cathedral', value: selectedCathedral?.label || 'Not selected' },
+    { label: 'Pave Style', value: selectedPaveStyle?.label || 'Not selected' },
+    { label: 'Band Width', value: configuratorState ? `${configuratorState.band.bandWidth.toFixed(1)}mm` : 'Not selected' },
+    { label: 'Ring Size', value: configuratorState ? `${configuratorState.band.ringSize} (US)` : 'Not selected' },
+    { label: 'Fit', value: selectedFit?.label || 'Not selected' },
+    { label: 'Engraving', value: configuratorState?.more.engraving || 'None' },
+    { label: 'Engraving Style', value: selectedEngravingStyle?.label || 'Not selected' },
+    { label: 'Surprise Stones', value: selectedSurpriseStones?.label || 'Not selected' },
   ];
 
   return (
@@ -103,7 +145,7 @@ export default function CheckoutPage() {
           {/* Configurator Selections */}
           <div>
             <h3 className="text-sm font-medium text-muted-foreground mb-3">Customizations</h3>
-            <div className="space-y-2">
+            <div className="space-y-2 max-h-80 overflow-y-auto">
               {configuratorSummary.map((item) => (
                 <div
                   key={item.label}

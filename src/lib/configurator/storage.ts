@@ -19,7 +19,31 @@ export function loadConfiguratorState(): ConfiguratorState {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
-      return JSON.parse(saved) as ConfiguratorState;
+      const parsed = JSON.parse(saved) as Partial<ConfiguratorState>;
+      // Deep merge with initial state to handle migrations
+      return {
+        metal: {
+          ...initialConfiguratorState.metal,
+          ...parsed.metal,
+        },
+        diamonds: {
+          ...initialConfiguratorState.diamonds,
+          ...parsed.diamonds,
+        },
+        head: {
+          ...initialConfiguratorState.head,
+          ...parsed.head,
+        },
+        band: {
+          ...initialConfiguratorState.band,
+          ...parsed.band,
+        },
+        more: {
+          ...initialConfiguratorState.more,
+          ...parsed.more,
+        },
+        settingPrice: parsed.settingPrice ?? initialConfiguratorState.settingPrice,
+      };
     }
   } catch (error) {
     console.error('Failed to load configurator state:', error);

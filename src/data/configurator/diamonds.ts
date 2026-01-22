@@ -1,104 +1,45 @@
 import type {
-  DiamondQualityOption,
-  DiamondClarityOption,
-  DiamondColorOption,
+  CenterStoneCount,
+  DiamondType,
+  ConfigOption,
 } from '@/types/configurator';
 
-export const diamondQualities: DiamondQualityOption[] = [
-  {
-    id: 'good',
-    label: 'Good',
-    description: 'Reflects most light that enters',
-    priceModifier: 0,
-  },
-  {
-    id: 'very-good',
-    label: 'Very Good',
-    description: 'Reflects nearly as much light as ideal',
-    priceModifier: 150,
-  },
-  {
-    id: 'excellent',
-    label: 'Excellent',
-    description: 'Maximum brilliance and fire',
-    priceModifier: 350,
-  },
+export const centerStoneOptions: ConfigOption<CenterStoneCount>[] = [
+  { id: 'one-stone', label: 'One Stone' },
+  { id: 'two-stone', label: 'Two Stone' },
+  { id: 'three-stone', label: 'Three Stone' },
 ];
 
-export const diamondClarities: DiamondClarityOption[] = [
-  {
-    id: 'VS2',
-    label: 'VS2',
-    description: 'Very Slightly Included 2',
-    priceModifier: 0,
-  },
-  {
-    id: 'VS1',
-    label: 'VS1',
-    description: 'Very Slightly Included 1',
-    priceModifier: 100,
-  },
-  {
-    id: 'VVS2',
-    label: 'VVS2',
-    description: 'Very Very Slightly Included 2',
-    priceModifier: 250,
-  },
-  {
-    id: 'VVS1',
-    label: 'VVS1',
-    description: 'Very Very Slightly Included 1',
-    priceModifier: 400,
-  },
-  {
-    id: 'IF',
-    label: 'IF',
-    description: 'Internally Flawless',
-    priceModifier: 600,
-  },
+export const diamondTypeOptions: ConfigOption<DiamondType>[] = [
+  { id: 'natural', label: 'Natural' },
+  { id: 'lab-grown', label: 'Lab Grown' },
+  { id: 'skip', label: 'Skip' },
 ];
 
-export const diamondColors: DiamondColorOption[] = [
-  {
-    id: 'J',
-    label: 'J',
-    description: 'Near colorless',
-    priceModifier: 0,
-  },
-  {
-    id: 'I',
-    label: 'I',
-    description: 'Near colorless',
-    priceModifier: 75,
-  },
-  {
-    id: 'H',
-    label: 'H',
-    description: 'Near colorless',
-    priceModifier: 150,
-  },
-  {
-    id: 'G',
-    label: 'G',
-    description: 'Near colorless',
-    priceModifier: 250,
-  },
-  {
-    id: 'F',
-    label: 'F',
-    description: 'Colorless',
-    priceModifier: 400,
-  },
-  {
-    id: 'E',
-    label: 'E',
-    description: 'Colorless',
-    priceModifier: 550,
-  },
-  {
-    id: 'D',
-    label: 'D',
-    description: 'Colorless (highest grade)',
-    priceModifier: 750,
-  },
-];
+// Helper function to get center stone label
+export function getCenterStoneLabel(count: CenterStoneCount): string {
+  switch (count) {
+    case 'one-stone':
+      return 'One Stone Ring (Solitaire)';
+    case 'two-stone':
+      return 'Two Stone Ring';
+    case 'three-stone':
+      return 'Three Stone Ring';
+    default:
+      return '';
+  }
+}
+
+// Helper function to get diamond type description
+export function getDiamondTypeDescription(type: DiamondType): string {
+  switch (type) {
+    case 'natural':
+      return 'Natural diamond center stones & pave (if applicable)';
+    case 'lab-grown':
+      return 'Lab grown diamond center stones & pave (if applicable)';
+    case 'skip':
+      return 'Skip diamond selection for now';
+    default:
+      return '';
+  }
+}

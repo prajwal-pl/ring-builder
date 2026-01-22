@@ -1,8 +1,8 @@
 'use client';
 
 import { RingViewerPlaceholder } from './ring-viewer/ring-viewer-placeholder';
-import { ConfigSidebar } from './config-sidebar/config-sidebar';
 import { BottomBar } from './bottom-bar/bottom-bar';
+import { ConfigSidebar } from './config-sidebar/config-sidebar';
 
 export function ConfiguratorLayout() {
   return (
